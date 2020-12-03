@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +18,10 @@ import java.io.File;
 @RequestMapping("/email")
 public class EmailController {
 
-    //@Autowired
-    //private JavaMailSender jms;
+    @Autowired
+    private JavaMailSender jms;
     
-    @Value("${spring.mail.username}")
+    @Value("${spring.mail.username:}")
     private String from;
 
     /**
@@ -35,7 +36,7 @@ public class EmailController {
             message.setTo("888888@qq.com"); // 接收地址
             message.setSubject("一封简单的邮件"); // 标题
             message.setText("使用Spring Boot发送简单邮件。"); // 内容
-            //jms.send(message);
+            jms.send(message);
             return "发送成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,7 +51,7 @@ public class EmailController {
     public String sendHtmlEmail() {
         MimeMessage message = null;
         try {
-            //message = jms.createMimeMessage();
+            message = jms.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo("888888@qq.com"); // 接收地址
@@ -58,7 +59,7 @@ public class EmailController {
             // 带HTML格式的内容
             StringBuffer sb = new StringBuffer("<p style='color:#6db33f'>使用Spring Boot发送HTML格式邮件。</p>");
             helper.setText(sb.toString(), true);
-            //jms.send(message);
+            jms.send(message);
             return "发送成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +74,7 @@ public class EmailController {
     public String sendAttachmentsMail() {
         MimeMessage message = null;
         try {
-            //message = jms.createMimeMessage();
+            message = jms.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo("888888@qq.com"); // 接收地址
@@ -82,7 +83,7 @@ public class EmailController {
             // 传入附件
             FileSystemResource file = new FileSystemResource(new File("src/main/resources/static/file/项目文档.docx"));
             helper.addAttachment("项目文档.docx", file);
-            //jms.send(message);
+            jms.send(message);
             return "发送成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,7 +95,7 @@ public class EmailController {
     public String sendInlineMail() {
         MimeMessage message = null;
         try {
-            //message = jms.createMimeMessage();
+            message = jms.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo("888888@qq.com"); // 接收地址
@@ -103,7 +104,7 @@ public class EmailController {
             // 传入附件
             FileSystemResource file = new FileSystemResource(new File("src/main/resources/static/img/sunshine.png"));
             helper.addInline("img", file);
-            //jms.send(message);
+            jms.send(message);
             return "发送成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +119,7 @@ public class EmailController {
     public String sendTemplateEmail(String code) {
         MimeMessage message = null;
         try {
-            //message = jms.createMimeMessage();
+            message = jms.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo("888888@qq.com"); // 接收地址
@@ -128,7 +129,7 @@ public class EmailController {
             context.setVariable("code", code);
             String template = templateEngine.process("emailTemplate", context);
             helper.setText(template, true);
-            //jms.send(message);
+            jms.send(message);
             return "发送成功";
         } catch (Exception e) {
             e.printStackTrace();
