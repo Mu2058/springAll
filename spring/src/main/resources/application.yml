@@ -6,20 +6,27 @@ spring:
     url: jdbc:mysql://localhost:3306/crm?serverTimezone=GMT%2B8
     username: root
     password: 123
+  jmx:
+    default-domain: mybatis
+mybatis:
+  # 指定实体类包路径
+  typeAliasesPackage: com.example.spring.bean
+  # 指定xml文件扫描路径
+  mapper-locations: classpath*:mapper/*.xml
 #  页面
   thymeleaf:
     cache: false
-  mail:
-    host: smtp.163.com
-    username: 你的账号
-    password: 你的密码
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
+#  mail:
+#    host: smtp.163.com
+#    username: 你的账号
+#    password: 你的密码
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#            required: true
 logging:
   level:
     com:
