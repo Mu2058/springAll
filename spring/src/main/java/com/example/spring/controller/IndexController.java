@@ -43,11 +43,6 @@ public class IndexController {
 
     public static void main(String[] args) {
         System.out.println("1 = " + UUID.randomUUID());
-        System.out.println("2 = " + UUID.randomUUID());
-        System.out.println("3 = " + UUID.randomUUID());
-        System.out.println("4 = " + UUID.randomUUID());
-        System.out.println("5 = " + UUID.randomUUID());
-        System.out.println("6 = " + UUID.randomUUID());
 
     }
 }
